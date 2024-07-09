@@ -1,0 +1,8 @@
+.*
+.Xil/*
+.ipcache/*
+bin/*
+logs/*
+v++*
+*.log
+*.out
