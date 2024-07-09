@@ -40,7 +40,7 @@ include ./xilinx.mk
 XLX_EXEC_ARGS += $(XLX_SINGLE_XCLBIN) #bin/build_dir.hw.1/hihispmv.xclbin 
 
 ## Some interesting matrices
-XLX_MATRIX		:= c8_mat11/c8_mat11_row_sorted.mtx
+XLX_MATRIX		:= psmigr_2/psmigr_2_row_sorted.mtx
 XLX_DEVICE_ID	:= 1	# Deviced Id
 XLX_TEST		:= 0	# Test Type
 XLX_CU_COUNT	:= 16	# Compute Units
