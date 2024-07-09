@@ -364,7 +364,7 @@ int RunHiHiSpMV(
         mismatchs += scl_dff_fail_sn && abs_diff_fail_sn;
     }
     float diffpercent = 100.0 * mismatchs / vecB.size();
-    bool pass = diffpercent < 0.0;
+    bool pass = diffpercent <= 0.0;
     if(pass){
         std::cout << "Validation success\n";
     } else{
