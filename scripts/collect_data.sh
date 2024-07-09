@@ -4,8 +4,7 @@
 # Additional ones can be added by addding (name, matrix market download address) pairs in the followings
 declare -A matrices
 
-matrices[c8_mat11]="https://suitesparse-collection-website.herokuapp.com/MM/JGD_Groebner/c8_mat11.tar.gz"               #| n = 4.5k x 5.7k    | nnz = 2.4m | unsymm
-# matrices[psmigr_2]="https://suitesparse-collection-website.herokuapp.com/MM/HB/psmigr_2.tar.gz"                         #| n = 3.1k           | nnz =.54m  | unsymm
+matrices[psmigr_2]="https://suitesparse-collection-website.herokuapp.com/MM/HB/psmigr_2.tar.gz"                         #| n = 3.1k           | nnz =.54m  | unsymm
 
 download_extract_matrix() {
     if ! wget "$2"; then
