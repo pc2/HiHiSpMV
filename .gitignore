@@ -3,6 +3,7 @@
 .ipcache/*
 bin/*
 logs/*
+data/*
 v++*
 *.log
 *.out

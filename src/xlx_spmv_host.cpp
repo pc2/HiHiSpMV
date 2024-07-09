@@ -352,39 +352,25 @@ int RunHiHiSpMV(
         locRows += tiles[i][0]->rows();
     }
 
-    // Todo: keep this?
-    // double tolerance = std::numeric_limits<T>::epsilon();
-    // std::cout<< "vectorNorm(vecB): " << vectorNorm(vecB) << std::endl;
-    // std::cout<< "vectorNorm(vecC): " << vectorNorm(vecC) << std::endl;
-
-    // if (fabs(vectorNorm(vecB) - vectorNorm(vecC)) <= tolerance * sqrt(vecC.size())) { //Aggressive check
-    //     std::cout<< "results_verfication_successful" << std::endl;
-    // } else {
-    //     std::cout<< "results_verfication_failed. Tolerance: " << tolerance * sqrt(vecC.size()) << std::endl;
-    // }
-
-    // for (int x=0; x<=4; x++) {
-        float tol = 4 / (double) std::pow(10, x);
-        int mismatchs = 0;
-        for (int mm = 0; mm < vecB.size(); ++mm) {
-            double v_cpu_sn = vecC[mm];
-            double v_fpga = vecB[mm];
-            double dff_sn = fabs(v_cpu_sn - v_fpga);
-            double x_sn = std::min(fabs(v_cpu_sn), fabs(v_fpga)) + tol;
-            bool scl_dff_fail_sn = dff_sn/x_sn > tol;
-            bool abs_diff_fail_sn = dff_sn > tol;
-            mismatchs += scl_dff_fail_sn && abs_diff_fail_sn;
-        }
-        float diffpercent = 100.0 * mismatchs / vecB.size();
-        bool pass = diffpercent < 0.0;
-        if(pass){
-            std::cout << "Validation success\n";
-            break;
-        } else{
-            std::cout << "Validation failed\n";
-            std::cout<< std::fixed << std::setprecision(6) << "errors, tol = " << tol << ", num_mismatch = " << mismatchs << " , percent = " <<  diffpercent << std::endl;
-        }
-    // }
+    float tol = 1 / (double) std::pow(10, 4);
+    int mismatchs = 0;
+    for (int mm = 0; mm < vecB.size(); ++mm) {
+        double v_cpu_sn = vecC[mm];
+        double v_fpga = vecB[mm];
+        double dff_sn = fabs(v_cpu_sn - v_fpga);
+        double x_sn = std::min(fabs(v_cpu_sn), fabs(v_fpga)) + tol;
+        bool scl_dff_fail_sn = dff_sn/x_sn > tol;
+        bool abs_diff_fail_sn = dff_sn > tol;
+        mismatchs += scl_dff_fail_sn && abs_diff_fail_sn;
+    }
+    float diffpercent = 100.0 * mismatchs / vecB.size();
+    bool pass = diffpercent < 0.0;
+    if(pass){
+        std::cout << "Validation success\n";
+    } else{
+        std::cout << "Validation failed\n";
+        std::cout<< std::fixed << std::setprecision(6) << "errors, tol = " << tol << ", num_mismatch = " << mismatchs << " , percent = " <<  diffpercent << std::endl;
+    }
     return 0;
 }
 
