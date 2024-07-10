@@ -25,7 +25,7 @@ For the followings, run the commands in the main *HiHiSpMV* directory.
 
 #### 1. Host
 
-``make build_xilinx_spmv_host TARGET=<hw/hw_emu/sw_emu> O=<0-3> 0=<gcc-Olevel>``
+``make build_xilinx_spmv_host TARGET=<hw/hw_emu/sw_emu> O=<gcc-Olevel>``
 
 #### 2. Hardware/Software Emulation
 
