@@ -244,8 +244,6 @@ int RunHiHiSpMV(
                         runKrnl4(tiles.size());
 
     for (uint i=0; i<runs; i++) {
-
-        std::cout<< "starting kernels..." << std::endl;
         for (int j=0; j<tiles.size(); j++) {
             runKrnl1[j] = xrt::run(spmvKrnl1[j]);
             runKrnl1[j].set_arg(3, boValues[j]); 
@@ -276,30 +274,44 @@ int RunHiHiSpMV(
 
         }
 
+        std::chrono::duration<double> kernelTime;
+        auto kernel_start = std::chrono::high_resolution_clock::now();
+
         for (int j=0; j<tiles.size(); j++) {
             runKrnl2[j].start();
             runKrnl3[j].start();
             runKrnl4[j].start();    
+
+#if TARGET==sw_emu
+            runKrnl1[j].start();
+            runKrnl2[j].wait();
+            runKrnl3[j].wait();
+            runKrnl4[j].wait();
+            runKrnl1[j].wait();
+#endif
         }
 
-        auto kernel_start = std::chrono::high_resolution_clock::now();
-
+#if TARGET==sw_emu
+        auto kernelEnd = std::chrono::high_resolution_clock::now();
+        kernelTime = std::chrono::duration<double>(kernelEnd - kernel_start);
+#else
+        kernel_start = std::chrono::high_resolution_clock::now();
         for (int j=0; j<tiles.size(); j++) {
             runKrnl1[j].start();
         }
-
         for (int j=0; j<tiles.size(); j++) {
             runKrnl1[j].wait();
         }
 
         auto kernelEnd = std::chrono::high_resolution_clock::now();
-        auto kernelTime = std::chrono::duration<double>(kernelEnd - kernel_start);
+        kernelTime = std::chrono::duration<double>(kernelEnd - kernel_start);
 
         for (int j=0; j<tiles.size(); j++) {
             runKrnl2[j].wait();
             runKrnl3[j].wait();
             runKrnl4[j].wait();
         }
+#endif
         
         if (i == 0)
             lowestKernelTime = kernelTime;

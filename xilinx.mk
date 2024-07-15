@@ -11,7 +11,7 @@ DEBUG := no
 TARGET := sw_emu
 
 # GCC CPP flags for xilinx host
-CXXFLAGS_XILINX += -I$(SRC_REF)
+CXXFLAGS_XILINX += -DTARGET=$(TARGET)
 
 # Optimization flag for the synthesis
 O := 0
@@ -28,7 +28,7 @@ XRT_LIBS:= $(XILINX_XRT)/lib/
 VIVADO_INCLUDE:= $(XILINX_VIVADO)/include
 
 # Xilinx host compilation flags
-CXXFLAGS_XILINX := -I$(XRT_INCLUDE) -I$(VIVADO_INCLUDE) -O3 -std=c++17 -lpthread -lrt -lstdc++ -fmessage-length=0 #-Wall
+CXXFLAGS_XILINX += -I$(XRT_INCLUDE) -I$(VIVADO_INCLUDE) -O3 -std=c++17 -lpthread -lrt -lstdc++ -fmessage-length=0 #-Wall
 
 EXEC_PRE_COMMAND := EMCONFIG_PATH=. XRT_INI_PATH=xrt.ini
 

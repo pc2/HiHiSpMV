@@ -29,7 +29,6 @@ SOFTWARE.
 #include <vector>
 #include <limits>
 
-
 #include "../include/includes.hpp"
 #include "../include/dense_vector.hpp"
 #include "../include/csr_matrix.hpp"
@@ -40,6 +39,10 @@ SOFTWARE.
 #include <xrt/xrt_kernel.h>
 #include <xrt/xrt_bo.h>
 #include "xclbin.h"
+
+#define sw_emu  0
+#define hw_emu  1
+#define hw      2
 
 void CreateKernels(
         std::vector<xrt::kernel> &spmvKrnl1, 
