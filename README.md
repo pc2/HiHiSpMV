@@ -37,7 +37,7 @@ For the followings, run the commands in the main *HiHiSpMV* directory.
 The ``ID`` defines the suffix for intermediate and final outputs in the ``HiHiSpmv/bin/`` directory, and the ``CFGID`` defines the identifier of the linker configuration file (in ``HiHiSpMV/src/kernels/`` directory) used in Vitis.
 
 > *NOTE*: Various paramters could be adjusted in the Kernel-Config (``HiHiSpMV/src/kernels/csr_spmv_repl.cfg``) Link-Config (``HiHiSpMV/src/kernels/single.1.cfg``), XRT.ini (``HiHiSpMV/xrt.ini``) and Definitions (``HiHiSpmv/src/kernels/xlx_definitions.hpp``) files.
-Their adjustable settings are listed below.
+Their adjustable settings are listed [below](#adjustable-parameters).
 
 
 #### 3. Bitstream/Hardware 
@@ -47,7 +47,7 @@ Their adjustable settings are listed below.
 The ``ID`` and ``CFGID`` are as defined above.
 
 > *NOTE*: Various paramters could be adjusted in the Kernel-Config (``HiHiSpMV/src/kernels/csr_spmv_repl.cfg``) Link-Config (``HiHiSpMV/src/kernels/single.1.cfg``), XRT.ini (``HiHiSpMV/xrt.ini``) and Definitions (``HiHiSpmv/src/kernels/xlx_definitions.hpp``) files.
-Their adjustable settings are listed below.
+Their adjustable settings are listed [below](#adjustable-parameters).
 ### Run
 
 #### 1. Download test matrix/matrices
@@ -74,7 +74,7 @@ In the following the adjustable paramters in the Kernel-Config (``HiHiSpMV/src/k
 
 ### 1. Definitions
 
-- ``Vector_SIZE``: Defines the maximum size length of the square tile. Could be adjusted according to the available BRAM blocks.
+- ``Vector_SIZE``: Defines the maximum side-length of the square tile. Could be adjusted according to the available BRAM blocks.
 - ``DEBUG <0-3>``: Applicable in ``sw_emu`` only to log the operations inside each CU.
 - Trip-count constants: Used for latency reports generatione e.g ``*_min`` and ``*_max``.
 
