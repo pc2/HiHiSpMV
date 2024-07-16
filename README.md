@@ -42,12 +42,15 @@ Their adjustable settings are listed [below](#adjustable-parameters).
 
 #### 3. Bitstream/Hardware 
 
+> *NOTE*: For avoiding synthesizing the Bitsteam/Hardware, already synthesized Bitstream can be downloaded from the [Zenedo upload](https://doi.org/10.5281/zenodo.12700052).
+
 ``make build_xilinx_spmv_xclbin TARGET=hw ID=<output-dir-Id>(default=1) CFGID=<link-config-file-Id>(default=1)``
 
 The ``ID`` and ``CFGID`` are as defined above.
 
 > *NOTE*: Various paramters could be adjusted in the Kernel-Config (``HiHiSpMV/src/kernels/csr_spmv_repl.cfg``) Link-Config (``HiHiSpMV/src/kernels/single.1.cfg``), XRT.ini (``HiHiSpMV/xrt.ini``) and Definitions (``HiHiSpmv/src/kernels/xlx_definitions.hpp``) files.
 Their adjustable settings are listed [below](#adjustable-parameters).
+ 
 ### Run
 
 #### 1. Download test matrix/matrices
@@ -60,25 +63,42 @@ Their adjustable settings are listed [below](#adjustable-parameters).
 
 ``make test_xilinx_spmv TARGET=<hw_emu/sw_emu> ID=<output-dir-Id>(default=1)``
 
-> *NOTE*: Make sure to match the ``TARGET`` between the host and xclbin. Various execution paramters could be adjusted in the main Makefile (``HiHiSpmv/Makefile``).
+> *NOTE*: Make sure to match the ``TARGET`` between the host and xclbin. Further, various execution paramters could be adjusted in the main [Makefile](#adjustable-parameters) (``HiHiSpmv/Makefile``).
 
 #### 3. Bitstream/Hardware
 
 ``make test_xilinx_spmv TARGET=hw ID=<output-dir-Id>(default=1)``
 
-> *NOTE*: Make sure to match the ``TARGET`` between the host and xclbin. Various execution paramters could be adjusted in the main Makefile (``HiHiSpmv/Makefile``).
+> *NOTE*: Make sure to match the ``TARGET`` between the host and xclbin and on the first time configuring the FPGA, a few seconds of delay is expected. Further, various execution paramters could be adjusted in the main [Makefile](#adjustable-parameters) (``HiHiSpmv/Makefile``).
+
+> *NOTE*: The [Zenedo upload](https://doi.org/10.5281/zenodo.12700052) could be downloaded and the Bitstream from it could be used in order to avoid synthesizing it by the following:
+
+```
+wget https://zenodo.org/records/12700052/files/HiHiSpMV-v0.0.1.zip
+unzip HiHiSpMV-v0.0.1.zip
+cp -r HiHiSpMV-v0.0.1/bin/ bin/
+```
 
 ## Adjustable Parameters
 
-In the following the adjustable paramters in the Kernel-Config (``HiHiSpMV/src/kernels/csr_spmv_repl.cfg``) Link-Config (``HiHiSpMV/src/kernels/single.1.cfg``), XRT.ini (``HiHiSpMV/xrt.ini``) and Definitions (``HiHiSpmv/src/kernels/xlx_definitions.hpp``) files, are listed.
+In the following the adjustable paramters in the main Makefile (``HiHiSpmv/Makefile``), Kernel-Config (``HiHiSpMV/src/kernels/csr_spmv_repl.cfg``) Link-Config (``HiHiSpMV/src/kernels/single.1.cfg``), XRT.ini (``HiHiSpMV/xrt.ini``) and Definitions (``HiHiSpmv/src/kernels/xlx_definitions.hpp``) files, are listed.
 
-### 1. Definitions
+### 1. Makefile
 
-- ``Vector_SIZE``: Defines the maximum side-length of the square tile. Could be adjusted according to the available BRAM blocks.
+> *NOTE*: All of the following Makefile parameters apply to executing the host only.
+
+- ``HW_SIZE``: The maximum side-length of the square tile. Should be matching with the ``VECTOR_SIZE`` in the Definitions file.
+- ``XLX_DEVICE_ID``: The device Id. one which the Bitstream will be loaded onto. 
+- ``XLX_ITERS``: The number of iterations per launch of the CUs.
+- ``XLX_RUNS``: The number of times the CUs are launched.
+
+### 2. Definitions
+
+- ``VECTOR_SIZE``: Defines the maximum side-length of the square tile. Could be adjusted according to the available BRAM blocks.
 - ``DEBUG <0-3>``: Applicable in ``sw_emu`` only to log the operations inside each CU.
 - Trip-count constants: Used for latency reports generatione e.g ``*_min`` and ``*_max``.
 
-### 2. [Link-Config](https://docs.amd.com/r/2022.2-English/ug1393-vitis-application-acceleration/Getting-Started-with-Vitis)
+### 3. [Link-Config](https://docs.amd.com/r/2022.2-English/ug1393-vitis-application-acceleration/Getting-Started-with-Vitis)
 
 - HBM assignments: Assigns each CU's HBM bank connections e.g. ``sp=csr_spmv_repl_1_1.indices:HBM[0]``. Should be matching with the number of CUs to be used.
 - Stream connections: Defines intra-CU AXI-stream connections e.g. ``sc=csr_spmv_repl_1_4.out_indices:csr_spmv_repl_2_4.in_indices:64``. Should be matching with the number of CUs to be used.
@@ -86,7 +106,7 @@ In the following the adjustable paramters in the Kernel-Config (``HiHiSpMV/src/k
  Should be matching with the number of CUs to be used.
 - Number of kernels: Defines number of CUs for each kernel e.g. ``nk=csr_spmv_repl_1:16``.
 
-### 3. [XRT.ini](https://docs.amd.com/r/2022.2-English/ug1393-vitis-application-acceleration/xrt.ini-File)
+### 4. [XRT.ini](https://docs.amd.com/r/2022.2-English/ug1393-vitis-application-acceleration/xrt.ini-File)
 
 
 Should use legacy scheduler by specifying the following: 
