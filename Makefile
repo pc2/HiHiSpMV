@@ -86,12 +86,11 @@ test_xilinx_spmv:
 
 clean:
 	$(RM) $(XLX_SPMV_HOST_BIN)
-	$(RM) "*.log"
-	$(RM) "*.out"
-	$(RM) ".*"
+	$(RM) *.log
+	$(RM) *.out
 
 cleanall: clean
-	$(RM) "bin"
-	$(RM) "data"
+	$(RM) $(BIN_DIR)
+	$(RM) $(DATA_PATH)
 	git clean -dXf
 
