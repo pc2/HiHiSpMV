@@ -41,13 +41,13 @@ XLX_EXEC_ARGS += $(XLX_SINGLE_XCLBIN) #bin/build_dir.hw.1/hihispmv.xclbin
 
 ## Some interesting matrices
 XLX_MATRIX		:= psmigr_2/psmigr_2_row_sorted.mtx
-XLX_DEVICE_ID	:= 0	# Deviced Id
+XLX_DEVICE_ID		:= 0	# Deviced Id
 XLX_TEST		:= 0	# Test Type
-XLX_CU_COUNT	:= 16	# Compute Units
+XLX_CU_COUNT		:= 16	# Compute Units
 XLX_TILES		:= 0	# Tiles in a partition - Inactive for now
-XLX_PART_METHOD := 2	# Partition method
+XLX_PART_METHOD 	:= 2	# Partition method
 XLX_ITERS		:= 100	# Iterations
-XLX_RUNS		:= 1	# Runs
+XLX_RUNS		:= 10	# Runs
 HW_SIZE			:= 1875	# Hardware size (max. square tile size)
 
 XLX_EXEC_ARGS += $(DATA_PATH)/$(XLX_MATRIX) $(XLX_DEVICE_ID) $(XLX_TEST) $(XLX_CU_COUNT) \
@@ -84,6 +84,14 @@ test_xilinx_spmv:
 
 # -------------------------------- Misc. targets  --------------------------------
 
-clean: # Todo: Add the remaining cleanup stuff here
+clean:
+	$(RM) $(XLX_SPMV_HOST_BIN)
+	$(RM) "*.log"
+	$(RM) "*.out"
+	$(RM) ".*"
+
+cleanall: clean
 	$(RM) "bin"
+	$(RM) "data"
 	git clean -dXf
+
