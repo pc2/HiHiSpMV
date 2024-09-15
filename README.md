@@ -1,6 +1,6 @@
 # HiHiSpMV
 
-HiHiSpMV is a Sparse Matrix with dense Vector multiplication (SpMV) accelerator for HBM equipped FPGAs. Its details could be found [here](tobeadded.com).
+HiHiSpMV is a Sparse Matrix with dense Vector multiplication (SpMV) accelerator for HBM equipped FPGAs. Its details could be found [here](https://doi.ieeecomputersociety.org/10.1109/FCCM60383.2024.00014).
 
 ## Dependencies
 * VITIS 22.2/XRT 2.14 and AMD/Xilinx xilinx_u280_gen3x16_xdma_1_202211_1 shell for a AMD/Xilinx U280 FPGA card.
