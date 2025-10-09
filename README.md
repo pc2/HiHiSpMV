@@ -126,5 +126,5 @@ In order to run all 16 CUs, i.e. more than 32 kernels.
     Title = {{HiHiSpMV}: Sparse Matrix Vector Multiplication with Hierarchical Row Reductions on {FPGAs} with High Bandwidth Memory},
     Booktitle = {Proc. IEEE Symp. on Field-Programmable Custom Computing Machines (FCCM)},
     Year = {2024},
-    Note = {To appear.}}
+    Doi = {10.1109/fccm60383.2024.00014}}
 
